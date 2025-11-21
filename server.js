@@ -39,6 +39,20 @@ app.post("/products", async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
+app.patch("/products/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const productBody = req.body;
+    const updatedProduct = await Product.findByIdAndUpdate(id, productBody, {
+      new: true,
+    });
+    res.json(updatedProduct);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
